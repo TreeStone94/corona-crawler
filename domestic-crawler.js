@@ -122,3 +122,5 @@ class DomesticCrawler {
         return parseInt(absValue.replace(/[\s,]*/g,''));
     }
 }
+
+module.exports = DomesticCrawler;
