@@ -34,7 +34,7 @@ class DomesticCrawler {
                 .toArray()
                 .filter((x) => x.type === 'text');
 
-            if($(titleTextEl).text().trim() === '눶ㄱ 검사현황') {
+            if($(titleTextEl).text().trim() === '누적 검사현황') {
                 const tableEl = $(el).next();
                 if( !tableEl) {
                     throw new Error('table not found.');
@@ -59,6 +59,57 @@ class DomesticCrawler {
 
         if( result == null) {
             throw new Error('Data not found');
+        }
+
+        return result;
+    }
+
+    _extractByAge = ($) => {
+        const mapping = {
+            '80 이상': '80',
+            '70-79': '70',
+            '60-69': '60',
+            '50-59': '50',
+            '40-49': '40',
+            '30-39': '30',
+            '20-29': '20',
+            '10-19': '10',
+            '0-9': '0',
+        };
+
+        return this._extractDataWithMapping(mapping, $);
+    }
+
+    _extractBySex = ($) => {
+        const mapping = {
+            '남성': 'male',
+            '여성': 'female'
+        }
+
+         return this._extractDataWithMapping(mapping, $);
+    }
+
+    _extractDataWithMapping = (mapping, $) => {
+        const result = {};
+
+        $('.data_table table').each((i, el) => {
+            $(el)
+                .find('tbody tr')
+                .each((j, row) => {
+                    const cols = $(row).children();
+                    _.forEach(mapping, (fieldName, firstColumnText) => {
+                        if($(cols.get(0)).text() === firstColumnText) {
+                            result[fieldName] = {
+                                confirmed: this._normalize($(cols.get(1)).text()),
+                                death: this._normalize($(cols.get(2)).text()),
+                            }
+                        }
+                    })
+                })
+        })
+
+        if(_.isEmpty(result)) {
+            throw new Error('data not found');
         }
 
         return result;
