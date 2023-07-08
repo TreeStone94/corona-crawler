@@ -25,7 +25,7 @@ crawlAndUpdateGlobal = async (outputPath, apiClient) => {
         ...await globalCrawler.crawlStat()
     }
 
-    console.log("newGlobalStat ==> ", newGlobalStat);
+    // console.log("newGlobalStat ==> ", newGlobalStat);
     // 변경된 값이 없으면 아무것도 핮지 않음
     if (_.isEqual(newGlobalStat, preData)) {
         console.log('domesticStat has not been changed');

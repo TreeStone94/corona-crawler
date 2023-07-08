@@ -18,7 +18,7 @@ class GlobalCrawler {
             .mapValues('cc')
             .value();
 
-        console.log("countryMapping ==> ", this.countryMapping)
+        // console.log("countryMapping ==> ", this.countryMapping)
     }
 
     crawlStat = async () => {
@@ -90,7 +90,7 @@ class GlobalCrawler {
                 cc: this.countryMapping[countryStat.title]
             }))
 
-        console.log('normalizedData ==> ', normalizedData);
+        // console.log('normalizedData ==> ', normalizedData);
         return _.keyBy(normalizedData, 'cc');
     }
 
