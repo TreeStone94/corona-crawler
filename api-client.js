@@ -27,6 +27,10 @@ class ApiClient {
         });
     }
 
+    findAllGlobalStat = async () => {
+        return await this.client.get('global-stats');
+    }
+
 }
 
 module.exports = ApiClient;

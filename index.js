@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const ApiClient = require('./api-client');
 const { crawlAndUpdateDomestic } = require('./domestic-updater');
+const { crawlAndUpdateGlobal } = require('./global-updater');
 
 main = async () => {
     // 마지막으로 크롤링한 데이터를 파일로 저장하는 디렉토리
@@ -17,6 +18,13 @@ main = async () => {
         await crawlAndUpdateDomestic(outputPath, apiClient);
     } catch (e) {
         console.error('crawlAndUpdateDomestic failed',e);
+    }
+
+    try {
+        console.log('crawlAndUpdateGlobal started');
+        await crawlAndUpdateGlobal(outputPath, apiClient);
+    } catch (e) {
+        console.error('crawlAndUpdateGlobal failed', e);
     }
 }
 
